@@ -6,4 +6,4 @@ This project is a Web Application to scout live handball match and feed state of
 
 Open git bash in the desired folder and use git clone command with the repository link to clone files into the desired folder. 
 Run 'npm i' command to install the dependancies. 
-Run 'npm start' command to launch the application in a browser.
+Run 'npm start' command to launch the application in a browser(localhost:3000).
