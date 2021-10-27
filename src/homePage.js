@@ -27,12 +27,12 @@ var intervalId;
 var timerRunning = 0;
 
 //penalty value initializers
-window.hp1Obj = {type: 1, seconds: 120, limit: 0, running: 0, active: 1, direction: -1};
-window.hp2Obj = {type: 2, seconds: 120, limit: 0, running: 0, active: 1, direction: -1};
-window.hp3Obj = {type: 3, seconds: 120, limit: 0, running: 0, active: 1, direction: -1};
-window.ap1Obj = {type: 4, seconds: 120, limit: 0, running: 0, active: 1, direction: -1};
-window.ap2Obj = {type: 5, seconds: 120, limit: 0, running: 0, active: 1, direction: -1};
-window.ap3Obj = {type: 6, seconds: 120, limit: 0, running: 0, active: 1, direction: -1};
+window.hp1Obj = {type: 1, seconds: 120, limit: 0, running: 0, active: 0, direction: -1};
+window.hp2Obj = {type: 2, seconds: 120, limit: 0, running: 0, active: 0, direction: -1};
+window.hp3Obj = {type: 3, seconds: 120, limit: 0, running: 0, active: 0, direction: -1};
+window.ap1Obj = {type: 4, seconds: 120, limit: 0, running: 0, active: 0, direction: -1};
+window.ap2Obj = {type: 5, seconds: 120, limit: 0, running: 0, active: 0, direction: -1};
+window.ap3Obj = {type: 6, seconds: 120, limit: 0, running: 0, active: 0, direction: -1};
 
 class MatchIdPanel extends React.Component {
     constructor(props){
@@ -392,6 +392,7 @@ class HomePenaltyClocks extends React.Component {
         var objP = this;
         document.getElementById(id + "Button").disabled = true;
         window[id+"Obj"].running = 1;
+        window[id+"Obj"].active = 1;
         PostMatchInstance();
         window[id + "Interval"] = setInterval(function () {
             let min = parseInt(objP.state[id+"Min"]);
@@ -400,6 +401,8 @@ class HomePenaltyClocks extends React.Component {
                 clearInterval(window[id + "Interval"]);
                 min = 2; sec = 0;
                 document.getElementById(id + "Button").disabled = false;
+                window[id+"Obj"].running = 0;
+                window[id+"Obj"].active = 0;
             }
             else if (sec == 0) { sec = 59; min--; }
             else { sec--; }
@@ -411,9 +414,9 @@ class HomePenaltyClocks extends React.Component {
     pauseHomePenaltyClocks(){
         //only when main clock is paused
         //pause all running home penalty clocks
-        if(window.hp1Interval){clearInterval(window.hp1Interval);window.hp1Obj.running=0;}
-        if(window.hp2Interval){clearInterval(window.hp2Interval);window.hp2Obj.running=0;}
-        if(window.hp3Interval){clearInterval(window.hp3Interval);window.hp3Obj.running=0;}
+        if(window.hp1Interval){clearInterval(window.hp1Interval);window.hp1Obj.running=0;window.hp1Obj.active = 0; }
+        if(window.hp2Interval){clearInterval(window.hp2Interval);window.hp2Obj.running=0;window.hp2Obj.active = 0;}
+        if(window.hp3Interval){clearInterval(window.hp3Interval);window.hp3Obj.running=0;window.hp3Obj.active = 0;}
     }
     resumeHomePenaltyClocks(){
         //only when main clock is resumed
@@ -456,6 +459,7 @@ class AwayPenaltyClocks extends React.Component {
         var objP = this;
         document.getElementById(id + "Button").disabled = true;
         window[id+"Obj"].running = 1;
+        window[id+"Obj"].active = 1;
         PostMatchInstance();
         window[id + "Interval"] = setInterval(function () {
             let min = parseInt(objP.state[id+"Min"]);
@@ -464,6 +468,8 @@ class AwayPenaltyClocks extends React.Component {
                 clearInterval(window[id + "Interval"]);
                 min = 2; sec = 0;
                 document.getElementById(id + "Button").disabled = false;
+                window[id+"Obj"].running = 0;
+                window[id+"Obj"].active = 0;
             }
             else if (sec == 0) { sec = 59; min--; }
             else { sec--; }
@@ -475,9 +481,9 @@ class AwayPenaltyClocks extends React.Component {
     pauseAwayPenaltyClocks(){
         //only when main clock is paused
         //pause all running away penalty clocks
-        if(window.ap1Interval){clearInterval(window.ap1Interval);window.ap1Obj.running=0;}
-        if(window.ap2Interval){clearInterval(window.ap2Interval);window.ap2Obj.running=0;}
-        if(window.ap3Interval){clearInterval(window.ap3Interval);window.ap3Obj.running=0;}
+        if(window.ap1Interval){clearInterval(window.ap1Interval);window.ap1Obj.running=0; window.ap1Obj.active=0;}
+        if(window.ap2Interval){clearInterval(window.ap2Interval);window.ap2Obj.running=0; window.ap2Obj.active=0;}
+        if(window.ap3Interval){clearInterval(window.ap3Interval);window.ap3Obj.running=0; window.ap3Obj.active=0;}
     }
     resumeAwayPenaltyClocks(){
         //only when main clock is resumed
